@@ -405,9 +405,9 @@ class StrawberrySQLAlchemyMapper(Generic[BaseModelType]):
                 relationship_key = tuple(
                     [
                         [
-                            x.value
-                            for x in instance_state.attrs.values()
-                            if x.key == local.key
+                            v.value
+                            for k, v in instance_state.attrs.items()
+                            if instance_state.attrs[k].key == local.key
                         ][0]
                         for local, _ in relationship.local_remote_pairs
                     ]
