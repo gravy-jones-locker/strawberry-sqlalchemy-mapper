@@ -404,7 +404,11 @@ class StrawberrySQLAlchemyMapper(Generic[BaseModelType]):
             else:
                 relationship_key = tuple(
                     [
-                        getattr(self, local.key)
+                        [
+                            x.value
+                            for x in instance_state.attrs.values()
+                            if x.key == local.key
+                        ][0]
                         for local, _ in relationship.local_remote_pairs
                     ]
                 )
