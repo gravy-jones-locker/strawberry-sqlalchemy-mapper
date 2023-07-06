@@ -39,7 +39,11 @@ class StrawberrySQLAlchemyLoader:
                 def group_by_remote_key(row: Any) -> Tuple:
                     return tuple(
                         [
-                            getattr(row, remote.key)
+                            [
+                                getattr(row, k)
+                                for k, column in row.__mapper__.c.items()
+                                if remote.key == column.key
+                            ][0]
                             for _, remote in relationship.local_remote_pairs
                         ]
                     )
