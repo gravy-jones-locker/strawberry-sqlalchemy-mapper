@@ -407,7 +407,7 @@ class StrawberrySQLAlchemyMapper(Generic[BaseModelType]):
                         [
                             v.value
                             for v in instance_state.attrs.values()
-                            if local in v.columns
+                            if local in getattr(v, "columns", [])
                         ][0]
                         for local, _ in relationship.local_remote_pairs
                     ]
